@@ -204,19 +204,19 @@ public class Game extends Thread {
         }
         int i = 0;
         gameMusic.start();
-        while (i < beats.length && !isInterrupted()) {
+        while ( i < beats.length && !isInterrupted() ) {
             boolean dropped = false;
-            if (beats[i].getTime() <= gameMusic.getTime()) {
-                Note note = new Note(beats[i].getNoteName());
+            if ( beats[ i ].getTime() <= gameMusic.getTime() ) {
+                Note note = new Note( beats[ i ].getNoteName() );
                 note.start();
-                noteList.add(note);
+                noteList.add( note );
                 i++;
                 dropped = true;
             }
-            if (!dropped) {
+            if ( !dropped ) {
                 try {
-                    Thread.sleep(5);
-                } catch (Exception e) {
+                    Thread.sleep(5 );
+                } catch ( Exception e ) {
                     e.printStackTrace();
                 }
             }
@@ -229,40 +229,40 @@ public class Game extends Thread {
     }
     public void setCombo() {
         combo+=1;
-        if (combo%10 == 0 && combo != 10) {
+        if ( combo%10 == 0 && combo != 10 ) {
             multiple++;
         }
     }
 
-    public void judge(String input) {
-        for (int i = 0 ; i < noteList.size() ; i++) {
-            Note note = noteList.get(i);
-            if (input.equals(note.getNoteType())) {
-                judgeEvent(note.judge());
+    public void judge( String input ) {
+        for ( int i = 0 ; i < noteList.size() ; i++ ) {
+            Note note = noteList.get( i );
+            if ( input.equals( note.getNoteType() ) ) {
+                judgeEvent( note.judge() );
                 break;
             }
         }
     }
 
-    public void judgeEvent(String judge) {
-        if(!judge.equals("None")) {
-            blueFlareImage = new ImageIcon(getClass().getResource("../Resources/images/blueFlare.png")).getImage();
+    public void judgeEvent( String judge ) {
+        if( !judge.equals( "None" ) ) {
+            blueFlareImage = new ImageIcon( getClass().getResource("../Resources/images/blueFlare.png" ) ).getImage();
             setCombo();
         }
-        switch (judge) {
+        switch ( judge ) {
             case "Miss" -> {
-                judgeImage = new ImageIcon(getClass().getResource("../Resources/images/judgeMiss.png")).getImage();
+                judgeImage = new ImageIcon( getClass().getResource("../Resources/images/judgeMiss.png" ) ).getImage();
             }
             case "Good" -> {
-                judgeImage = new ImageIcon(getClass().getResource("../Resources/images/judgeGood.png")).getImage();
+                judgeImage = new ImageIcon( getClass().getResource("../Resources/images/judgeGood.png" ) ).getImage();
                 score += 200;
             }
             case "Great" -> {
-                judgeImage = new ImageIcon(getClass().getResource("../Resources/images/judgeGreat.png")).getImage();
+                judgeImage = new ImageIcon( getClass().getResource("../Resources/images/judgeGreat.png" ) ).getImage();
                 score += 500;
             }
             case "Perfect" -> {
-                judgeImage = new ImageIcon(getClass().getResource("../Resources/images/judgePerfect.png")).getImage();
+                judgeImage = new ImageIcon( getClass().getResource("../Resources/images/judgePerfect.png" ) ).getImage();
                 score += 1000;
             }
         }
