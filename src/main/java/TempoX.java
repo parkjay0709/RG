@@ -42,7 +42,7 @@ public class TempoX extends JFrame {
 
     public TempoX() {
 
-        createImage(true);
+        createImage();
         assignmentImage();
 
         trackList.add(new Track("ボッカデラベリタ Title Image.png", "ボッカデラベリタ Start Image.jpg",
@@ -115,188 +115,188 @@ public class TempoX extends JFrame {
         this.repaint();
     }
 
-    public void selectTrack(int nowSelected) {
-        if (selectedMusic != null)
+    public void selectTrack( int nowSelected ) {
+        if ( selectedMusic != null )
             selectedMusic.close();
-        image[3] = new ImageIcon(getClass().getResource("../Resources/images/" + trackList.get(nowSelected).getTitleImage())).getImage();
-        image[4] = new ImageIcon(getClass().getResource("../Resources/images/" + trackList.get(nowSelected).getStartImage())).getImage();
-        selectedMusic = new Music(trackList.get(nowSelected).getStartMusic(), true);
+        image[ 3 ] = new ImageIcon( getClass().getResource("../Resources/images/" + trackList.get( nowSelected ).getTitleImage() )).getImage();
+        image[ 4 ] = new ImageIcon( getClass().getResource("../Resources/images/" + trackList.get( nowSelected ).getStartImage() )).getImage();
+        selectedMusic = new Music( trackList.get( nowSelected ).getStartMusic(), true );
         selectedMusic.start();
     }
 
     public void selectLeft() {
-        if(nowSelected == 0)
+        if( nowSelected == 0 )
             nowSelected = trackList.size() - 1;
         else
             nowSelected--;
-        selectTrack(nowSelected);
+        selectTrack( nowSelected );
     }
     public void selectRight() {
-        if(nowSelected == trackList.size() - 1)
+        if( nowSelected == trackList.size() - 1 )
             nowSelected = 0;
         else
             nowSelected++;
-        selectTrack(nowSelected);
+        selectTrack( nowSelected );
     }
 
-    public void gameStart(int nowSelected, String difficulty) {
-        if (selectedMusic != null)
+    public void gameStart( int nowSelected, String difficulty ) {
+        if ( selectedMusic != null )
             selectedMusic.close();
         isMainScreen = false;
-        LREH_SetVisTrue(false);
-        image[0] = new ImageIcon(getClass().getResource("../Resources/images/" + trackList.get(nowSelected).getGameImage())).getImage();
-        Button[9].setVisible(true);
+        LREH_SetVisTrue(false );
+        image[ 0 ] = new ImageIcon( getClass().getResource("../Resources/images/" + trackList.get( nowSelected ).getGameImage() )).getImage();
+        Button[ 9 ].setVisible( true );
         isGameScreen = true;
-        game = new Game(trackList.get(nowSelected).getTitleName(), difficulty, trackList.get(nowSelected).getGameMusic());
+        game = new Game( trackList.get( nowSelected ).getTitleName(), difficulty, trackList.get( nowSelected ).getGameMusic() );
         game.start();
-        setFocusable(true);
+        setFocusable( true );
     }
 
     public void backMain() {
         isMainScreen = true;
-        LREH_SetVisTrue(true);
-        image[0] = new ImageIcon(getClass().getResource("../Resources/images/mainBackground.jpg")).getImage();
-        Button[9].setVisible(false);
-        selectTrack(nowSelected);
+        LREH_SetVisTrue(true );
+        image[ 0 ] = new ImageIcon( getClass().getResource("../Resources/images/mainBackground.jpg" ) ).getImage();
+        Button[ 9 ].setVisible( false );
+        selectTrack( nowSelected );
         isGameScreen = false;
         game.close();
     }
 
     public void enterMain() {
-        image[0] = new ImageIcon(getClass().getResource("../Resources/images/mainBackground.jpg")).getImage();
+        image[ 0 ] = new ImageIcon( getClass().getResource("../Resources/images/mainBackground.jpg" ) ).getImage();
         isMainScreen = true;
-        gameStartSetVisible(false);
-        LREH_SetVisTrue(true);
+        gameStartSetVisible(false );
+        LREH_SetVisTrue(true );
         introMusic.close();
-        selectTrack(0);
+        selectTrack(0 );
     }
-    public void LREH_SetVisTrue(boolean isVisible) {
-        Button[5].setVisible(isVisible);
-        Button[6].setVisible(isVisible);
-        Button[7].setVisible(isVisible);
-        Button[8].setVisible(isVisible);
+    public void LREH_SetVisTrue( boolean isVisible ) {
+        Button[ 5 ].setVisible( isVisible );
+        Button[ 6 ].setVisible( isVisible );
+        Button[ 7 ].setVisible( isVisible );
+        Button[ 8 ].setVisible( isVisible );
     }
 
-    public void buttonSetting(JButton button, int x, int y, int width, int height, ImageIcon EnteredImage, ImageIcon BasicImage, int menu, boolean isSetVisible) {
-        if (!isSetVisible) button.setVisible(false);
-        button.setBounds(x, y, width, height);
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
-        button.setFocusPainted(false);
-        button.addMouseListener(new MouseAdapter() {
+    public void buttonSetting( JButton button, int x, int y, int width, int height, ImageIcon EnteredImage, ImageIcon BasicImage, int menu, boolean isSetVisible ) {
+        if ( !isSetVisible ) button.setVisible( false );
+        button.setBounds( x, y, width, height );
+        button.setBorderPainted( false );
+        button.setContentAreaFilled( false );
+        button.setFocusPainted( false );
+        button.addMouseListener( new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setIcon(EnteredImage);
-                button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                Music buttonEnteredMusic = new Music("buttonEnteredMusic.mp3", false);
+            public void mouseEntered( MouseEvent e ) {
+                button.setIcon( EnteredImage );
+                button.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+                Music buttonEnteredMusic = new Music("buttonEnteredMusic.mp3", false );
                 buttonEnteredMusic.start();
             }
             @Override
-            public void mouseExited(MouseEvent e) {
-                button.setIcon(BasicImage);
-                button.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            public void mouseExited( MouseEvent e ) {
+                button.setIcon( BasicImage );
+                button.setCursor( new Cursor( Cursor.DEFAULT_CURSOR ) );
             }
             @Override
-            public void mousePressed(MouseEvent e) {
-                Music buttonPressedMusic = new Music("buttonPressedMusic.mp3", false);
+            public void mousePressed( MouseEvent e ) {
+                Music buttonPressedMusic = new Music("buttonPressedMusic.mp3", false );
                 buttonPressedMusic.start();
-                ButtonEvent(menu);
+                ButtonEvent( menu );
             }
         });
-        add(button);
+        add( button );
     }
 
-    public void ButtonEvent(int menu) {
-        if (menu == 1) {
+    public void ButtonEvent( int menu ) {
+        if ( menu == 1 ) {
             enterMain();
-        } else if (menu == 2) {
+        } else if ( menu == 2 ) {
             try {
-                Thread.sleep(750);
-            } catch (InterruptedException e1) {
+                Thread.sleep(750 );
+            } catch ( InterruptedException e1 ) {
                 e1.printStackTrace();
             }
-            System.exit(0);
-        } else if (menu == 3) {
+            System.exit(0 );
+        } else if ( menu == 3 ) {
             selectLeft();
-        } else if (menu == 4) {
+        } else if ( menu == 4 ) {
             selectRight();
-        } else if (menu == 5) {
-            gameStart(nowSelected, "Easy");
-        } else if (menu == 6) {
-            gameStart(nowSelected, "Hard");
-        } else if (menu == 7) {
+        } else if ( menu == 5 ) {
+            gameStart(nowSelected, "Easy" );
+        } else if ( menu == 6) {
+            gameStart(nowSelected, "Hard" );
+        } else if ( menu == 7 ) {
             backMain();
-        } else if (menu == 8) {
-            Button[1].addActionListener(e -> {
+        } else if ( menu == 8 ) {
+            Button[ 1 ].addActionListener(e -> {
                 String id = idField.getText().trim();
-                String password = new String(passwordField.getPassword()).trim();
-                if (userManager.login(id, password)) {
-                    loginSetVisible(false);
-                    gameStartSetVisible(true);
+                String password = new String( passwordField.getPassword() ).trim();
+                if ( userManager.login( id, password ) ) {
+                    loginSetVisible(false );
+                    gameStartSetVisible(true );
                 } else {
-                    loginStatusLabel.setText("로그인 실패! 다시 시도해 주세요");
-                    loginStatusLabel.setForeground(Color.RED);
+                    loginStatusLabel.setText( "로그인 실패! 다시 시도해 주세요" );
+                    loginStatusLabel.setForeground( Color.RED );
                 }
             });
-        } else if (menu == 9) {
-            Button[2].addActionListener(e -> {
+        } else if ( menu == 9 ) {
+            Button[ 2 ].addActionListener(e -> {
                 String id = idField.getText().trim();
-                String password = new String(passwordField.getPassword()).trim();
-                if (userManager.signup(id, password)) {
-                    loginStatusLabel.setText("회원가입이 완료되었습니다 로그인을 해주십시오!");
-                    loginStatusLabel.setForeground(Color.GREEN);
+                String password = new String( passwordField.getPassword() ).trim();
+                if ( userManager.signup( id, password ) ) {
+                    loginStatusLabel.setText( "회원가입이 완료되었습니다 로그인을 해주십시오!" );
+                    loginStatusLabel.setForeground( Color.GREEN );
                 } else {
-                    loginStatusLabel.setText("회원가입이 실패했습니다. 아이디를 확인해 주세요");
-                    loginStatusLabel.setForeground(Color.RED);
+                    loginStatusLabel.setText( "회원가입이 실패했습니다. 아이디를 확인해 주세요" );
+                    loginStatusLabel.setForeground( Color.RED );
                 }
             });
         }
     }
 
-    public void gameStartSetVisible(boolean isVisible) {
-        Button[3].setVisible(isVisible);
-        Button[4].setVisible(isVisible);
+    public void gameStartSetVisible( boolean isVisible ) {
+        Button[ 3 ].setVisible( isVisible );
+        Button[ 4 ].setVisible( isVisible );
     }
-    public void loginSetVisible(boolean isVisible) {
-        idField.setVisible(isVisible);
-        passwordField.setVisible(isVisible);
-        Button[1].setVisible(isVisible);
-        Button[2].setVisible(isVisible);
-        loginStatusLabel.setVisible(isVisible);
+    public void loginSetVisible( boolean isVisible ) {
+        idField.setVisible( isVisible);
+        passwordField.setVisible( isVisible );
+        Button[ 1 ].setVisible( isVisible );
+        Button[ 2 ].setVisible( isVisible );
+        loginStatusLabel.setVisible( isVisible );
     }
 
     private void setupLoginUI() {
-        idField.setBounds(450, 400, 300, 50);
-        passwordField.setBounds(450, 460, 300, 50);
-        loginStatusLabel.setBounds(500, 520, 300, 30);
-        loginStatusLabel.setForeground(Color.WHITE);
+        idField.setBounds(450, 400, 300, 50 );
+        passwordField.setBounds(450, 460, 300, 50 );
+        loginStatusLabel.setBounds(500, 520, 300, 30 );
+        loginStatusLabel.setForeground( Color.WHITE );
 
-        add(idField);
-        add(passwordField);
-        add(loginStatusLabel);
+        add( idField );
+        add( passwordField );
+        add( loginStatusLabel );
     }
 
-    public void createImage(boolean IsJpg) {
+    public void createImage() {
         int En = 2, Ba = 1;
-        for (int i = 0; i < 10 ; i++) {
-            imageIconsEntered[i] = new ImageIcon(getClass().getResource("../Resources/images/" + En + ".png"));
-            imageIconsBasic[i] = new ImageIcon(getClass().getResource("../Resources/images/" + Ba + ".png"));
+        for ( int i = 0; i < 10 ; i++ ) {
+            imageIconsEntered[ i ] = new ImageIcon( getClass().getResource("../Resources/images/" + En + ".png" ) );
+            imageIconsBasic[ i ] = new ImageIcon( getClass().getResource("../Resources/images/" + Ba + ".png" ) );
             En += 2; Ba += 2;
         }
-        for (int i = 0; i < image.length-3 ; i++) {
-            image[i] = new ImageIcon(getClass().getResource("../Resources/images/" + (i+21) + ".png")).getImage();
+        for ( int i = 0; i < image.length-3 ; i++ ) {
+            image[ i ] = new ImageIcon( getClass().getResource("../Resources/images/" + ( i+21 ) + ".png" ) ).getImage();
         }
     }
 
     public void assignmentImage() {
         for (int i = 0; i < Button.length ; i++) {
-            Button[i] = new JButton(imageIconsBasic[i]);
+            Button[ i ] = new JButton( imageIconsBasic[ i ] );
         }
     }
 
     public void ButtonSetting() {
-        for (int i = 0; i < Button.length; i++) {
-            buttonSetting(Button[i], XyWh[i][0], XyWh[i][1], XyWh[i][2], XyWh[i][3], imageIconsEntered[i], imageIconsBasic[i], menu[i], isSetVisible[i]);
+        for ( int i = 0; i < Button.length; i++ ) {
+            buttonSetting( Button[ i ], XyWh[ i ][ 0 ], XyWh[ i ][ 1 ], XyWh[ i ][ 2 ], XyWh[ i ][ 3 ], imageIconsEntered[ i ], imageIconsBasic[ i ], menu[ i ], isSetVisible[ i ] );
         }
     }
 }
