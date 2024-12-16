@@ -11,15 +11,15 @@ public class Music extends Thread {
     private FileInputStream fis;
     private BufferedInputStream bis;
 
-    public Music(String name, boolean isLoop) {
+    public Music( String name, boolean isLoop ) {
         try {
             this.isLoop = isLoop;
-            file = new File(getClass().getResource("../Resources/music/" + name).toURI());
-            fis = new FileInputStream(file);
-            bis = new BufferedInputStream(fis);
-            player = new Player(bis);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            file = new File( getClass().getResource("../Resources/music/" + name ).toURI());
+            fis = new FileInputStream( file );
+            bis = new BufferedInputStream( fis );
+            player = new Player( bis );
+        } catch ( Exception e ) {
+            System.out.println( e.getMessage() );
         }
     }
 
@@ -40,13 +40,13 @@ public class Music extends Thread {
         try {
             do {
                 player.play();
-                fis = new FileInputStream(file);
-                bis = new BufferedInputStream(fis);
-                player = new Player(bis);
-            } while(isLoop);
-        } catch (Exception e) {
+                fis = new FileInputStream( file );
+                bis = new BufferedInputStream( fis );
+                player = new Player( bis );
+            } while( isLoop );
+        } catch ( Exception e ) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            System.out.println( e.getMessage() );
         }
     }
 }
