@@ -41,7 +41,6 @@ public class TempoX extends JFrame {
     private JLabel loginStatusLabel = new JLabel("" );
 
     public static Game game;
-    UserManager userManager = new UserManager();
 
     Music introMusic = new Music("introMusic.mp3", true );
 
