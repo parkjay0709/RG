@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class TempoX extends JFrame {
 
+
+    private SqlContorller sqler = new SqlContorller("jdbc:mysql://localhost:3306", "root", "M73046497ac!");
     private Graphics screenGraphics;
 
     private Image image[] = new Image[ 4 ];
@@ -15,8 +17,8 @@ public class TempoX extends JFrame {
     private ImageIcon imageIconsEntered[] = new ImageIcon[ 10 ];
     private JButton Button[] = new JButton[ 10 ];
     private int XyWh[][] = new int[][] { { 1245, 0, 30, 30 }, { 850, 450, 400, 100 }, { 850, 580, 400, 100 }, { 850, 450, 400, 100 },
-                                        { 850, 580, 400, 100 }, { 140, 310, 60, 60 }, { 1180, 310, 60, 60 },
-                                        { 375, 580, 250, 67 }, { 665, 580, 250, 67 }, { 20, 50, 50, 46 } };
+            { 850, 580, 400, 100 }, { 140, 310, 60, 60 }, { 1180, 310, 60, 60 },
+            { 375, 580, 250, 67 }, { 665, 580, 250, 67 }, { 20, 50, 50, 46 } };
     private int menu[] = new int[] { 2, 8, 9, 1, 2, 3, 4, 5, 6, 7 };
     private boolean isSetVisible[] = new boolean[] { true, true, true, false, false, false, false, false, false, false };
 
@@ -229,7 +231,7 @@ public class TempoX extends JFrame {
             Button[ 1 ].addActionListener(e -> {
                 String id = idField.getText().trim();
                 String password = new String( passwordField.getPassword() ).trim();
-                if ( userManager.login( id, password ) ) {
+                if ( sqler.checkData("select * from javadb.usertable where userId = '" + id + "' and userPassword = '" + password + "';")) {
                     loginSetVisible(false );
                     gameStartSetVisible(true );
                 } else {
@@ -241,10 +243,12 @@ public class TempoX extends JFrame {
             Button[ 2 ].addActionListener(e -> {
                 String id = idField.getText().trim();
                 String password = new String( passwordField.getPassword() ).trim();
-                if ( userManager.signup( id, password ) ) {
+                sqler.insert("insert into javadb.usertable(userId, userPassword) values ('" + id + "','" + password + "');");
+                if ( sqler.checkData("select * from javadb.usertable where userId = '" + id + "' and userPassword = '" + password + "';")) {
                     loginStatusLabel.setText( "회원가입이 완료되었습니다 로그인을 해주십시오!" );
                     loginStatusLabel.setForeground( Color.GREEN );
                 } else {
+                    sqler.delete("delete from javadb.usertable\nwhere userId = '" + id + "' and userPassword = '" + password + "';");
                     loginStatusLabel.setText( "회원가입이 실패했습니다. 아이디를 확인해 주세요" );
                     loginStatusLabel.setForeground( Color.RED );
                 }
