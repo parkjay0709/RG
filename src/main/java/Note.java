@@ -31,11 +31,11 @@ public class Note extends Thread {
             x = 436;
         }else if ( noteType.equals( "Space" ) ) {
             x = 540;
-        } else if ( noteType.equals( "I" ) ) {
+        } else if ( noteType.equals( "7" ) ) {
             x = 744;
-        } else if ( noteType.equals( "O" ) ) {
+        } else if ( noteType.equals( "8" ) ) {
             x = 848;
-        } else if ( noteType.equals( "P" ) ) {
+        } else if ( noteType.equals( "9" ) ) {
             x = 952;
         }
         this.noteType = noteType;
@@ -75,19 +75,19 @@ public class Note extends Thread {
     }
 
     public String judge() {
-        if( y >= 613 ) {
+        if( y >= 610 ) {
             close();
             return "Good";
         } else if ( y >= 600 ) {
             close();
             return "Great";
-        } else if ( y >= 587 ) {
+        } else if ( y >= 590 ) {
             close();
             return "Perfect";
         } else if ( y >= 550 ) {
             close();
             return "Great";
-        } else if ( y >= 533 ) {
+        } else if ( y >= 540 ) {
             close();
             return "Good";
         }

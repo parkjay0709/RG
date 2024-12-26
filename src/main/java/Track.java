@@ -1,16 +1,13 @@
 package main.java;
 
 public class Track {
-
-    private String titleImage;
     private String startImage;
     private String gameImage;
     private String startMusic;
     private String gameMusic;
     private String titleName;
 
-    public Track( String titleImage, String startImage, String gameImage, String startMusic, String gameMusic, String titleName ) {
-        this.titleImage = titleImage;
+    public Track( String startImage, String gameImage, String startMusic, String gameMusic, String titleName ) {
         this.startImage = startImage;
         this.gameImage = gameImage;
         this.startMusic = startMusic;
@@ -18,12 +15,6 @@ public class Track {
         this.titleName = titleName;
     }
 
-    public String getTitleImage() {
-        return titleImage;
-    }
-    public void setTitleImage( String titleImage ) {
-        this.titleImage = titleImage;
-    }
     public String getStartImage() {
         return startImage;
     }

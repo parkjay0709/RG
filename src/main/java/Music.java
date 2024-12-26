@@ -17,7 +17,7 @@ public class Music extends Thread {
             file = new File( getClass().getResource("../Resources/music/" + name ).toURI());
             fis = new FileInputStream( file );
             bis = new BufferedInputStream( fis );
-            player = new Player( bis );
+            this.player = new Player( bis );
         } catch ( Exception e ) {
             System.out.println( e.getMessage() );
         }
@@ -44,8 +44,10 @@ public class Music extends Thread {
                 bis = new BufferedInputStream( fis );
                 player = new Player( bis );
             } while( isLoop );
-        } catch ( Exception e ) {
+        } catch ( NullPointerException e ) {
             e.printStackTrace();
+            System.out.println( e.getMessage() );
+        } catch ( Exception e ) {
             System.out.println( e.getMessage() );
         }
     }

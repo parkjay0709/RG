@@ -10,106 +10,105 @@ public class TempoX extends JFrame {
 
     private Graphics screenGraphics;
 
-    private Image image[] = new Image[5];
-    private ImageIcon imageIconsBasic[] = new ImageIcon[10];
-    private ImageIcon imageIconsEntered[] = new ImageIcon[10];
-    private JButton Button[] = new JButton[10];
-    private int XyWh[][] = new int[][] {{1245, 0, 30, 30}, {850, 450, 400, 100}, {850, 580, 400, 100}, {850, 450, 400, 100}, {850, 580, 400, 100},
-                                        {140, 310, 60, 60}, {1180, 310, 60, 60}, {375, 580, 250, 67}, {665, 580, 250, 67}, {20, 50, 50, 46}};
-    private int menu[] = new int[] {2, 8, 9, 1, 2, 3, 4, 5, 6, 7};
-    private boolean isSetVisible[] = new boolean[] {true, true, true, false, false, false, false, false, false, false};
+    private Image image[] = new Image[ 4 ];
+    private ImageIcon imageIconsBasic[] = new ImageIcon[ 10 ];
+    private ImageIcon imageIconsEntered[] = new ImageIcon[ 10 ];
+    private JButton Button[] = new JButton[ 10 ];
+    private int XyWh[][] = new int[][] { { 1245, 0, 30, 30 }, { 850, 450, 400, 100 }, { 850, 580, 400, 100 }, { 850, 450, 400, 100 },
+                                        { 850, 580, 400, 100 }, { 140, 310, 60, 60 }, { 1180, 310, 60, 60 },
+                                        { 375, 580, 250, 67 }, { 665, 580, 250, 67 }, { 20, 50, 50, 46 } };
+    private int menu[] = new int[] { 2, 8, 9, 1, 2, 3, 4, 5, 6, 7 };
+    private boolean isSetVisible[] = new boolean[] { true, true, true, false, false, false, false, false, false, false };
 
-    private JLabel menuBar = new JLabel(new ImageIcon(getClass().getResource("../Resources/images/menuBar.png")));
+    private JLabel menuBar = new JLabel( new ImageIcon( getClass().getResource("../Resources/images/menuBar.png" ) ) );
 
     private int mouseX, mouseY;
+
+    private String[] MusicTitle = new String[] { "Ado - Bocca Della Verita", "DECO*27 - Rabbit Hole", "CLTH - Kakera" };
 
     private boolean isMainScreen = false;
     private boolean isGameScreen = false;
 
-    ArrayList<Track> trackList = new ArrayList<Track>();
+    ArrayList<Track> trackList = new ArrayList< Track >();
 
     private Music selectedMusic;
     private int nowSelected = 0;
 
     private JTextField idField = new JTextField();
     private JPasswordField passwordField = new JPasswordField();
-    private JLabel loginStatusLabel = new JLabel("");
+    private JLabel loginStatusLabel = new JLabel("" );
 
     public static Game game;
     UserManager userManager = new UserManager();
 
-    Music introMusic = new Music("introMusic.mp3", true);
+    Music introMusic = new Music("introMusic.mp3", true );
 
     public TempoX() {
 
         createImage();
         assignmentImage();
 
-        trackList.add(new Track("ボッカデラベリタ Title Image.png", "ボッカデラベリタ Start Image.jpg",
-                "ボッカデラベリタ Game Image.jpg", "ボッカデラベリタ Selected.mp3",
-                "Ado - ボッカデラベリタ.mp3", "Ado - Bocca Della Verita"));
-        trackList.add(new Track("ラビットホール Title Image.png", "ラビットホール Start Image.jpg",
-                "ラビットホール Game Image.jpg", "ラビットホール Selected.mp3",
-                "DECO27 - ラビットホール.mp3", "DECO27 - Rabbit Hole"));
+        TrackList();
 
-        setUndecorated(true);
-        setTitle("TempoX");
-        setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
-        setResizable(false);
-        setIconImage(image[1]);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setBackground(new Color(0,0,0,0));
-        setLayout(null);
+        System.out.println( trackList.get( nowSelected ).getStartMusic() );
 
-        addKeyListener(new KeyListener());
+        setUndecorated( true );
+        setTitle( "TempoX" );
+        setSize( Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT );
+        setResizable( false );
+        setIconImage( image[ 1 ] );
+        setLocationRelativeTo( null );
+        setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        setVisible( true );
+        setBackground( new Color(0,0,0,0 ) );
+        setLayout( null );
+
+        addKeyListener( new KeyListener() );
 
         introMusic.start();
 
         ButtonSetting();
 
-        menuBar.setBounds(0, 0, 1280, 30);
-        menuBar.addMouseListener(new MouseAdapter() {
+        menuBar.setBounds(0, 0, 1280, 30 );
+        menuBar.addMouseListener( new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed( MouseEvent e ) {
                 mouseX = e.getX();
                 mouseY = e.getY();
             }
-        });
-        menuBar.addMouseMotionListener(new MouseMotionAdapter() {
+        } );
+        menuBar.addMouseMotionListener( new MouseMotionAdapter() {
             @Override
-            public void mouseDragged(MouseEvent e) {
+            public void mouseDragged( MouseEvent e ) {
                 int x = e.getXOnScreen();
                 int y = e.getYOnScreen();
-                setLocation(x - mouseX, y - mouseY);
+                setLocation(x - mouseX, y - mouseY );
             }
-        });
-        add(menuBar);
+        } );
+        add( menuBar );
 
         setupLoginUI();
     }
 
-    public void paint(Graphics g) {
-        image[2] = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
-        screenGraphics = image[2].getGraphics();
-        screenDraw((Graphics2D) screenGraphics);
-        g.drawImage(image[2], 0, 0, null);
+    public void paint( Graphics g ) {
+        image[ 2 ] = createImage( Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT );
+        screenGraphics = image[ 2 ].getGraphics();
+        screenDraw( ( Graphics2D ) screenGraphics );
+        g.drawImage( image[ 2 ], 0, 0, null );
     }
 
-    public void screenDraw(Graphics2D g) {
-        g.drawImage(image[0], 0, 0, null);
-        if (isMainScreen) {
-            g.drawImage(image[4], 340, 100, null);
-            g.drawImage(image[3], 340, 70, null);
+    public void screenDraw( Graphics2D g ) {
+        g.drawImage( image[ 0 ], 0, 0, null );
+        if ( isMainScreen ) {
+            g.drawImage(image[ 3 ], 340, 100, null );
         }
-        if (isGameScreen) {
-            game.screenDraw(g);
+        if ( isGameScreen ) {
+            game.screenDraw( g );
         }
-        paintComponents(g);
+        paintComponents( g );
         try {
-            Thread.sleep(5);
-        } catch (Exception e) {
+            Thread.sleep(5 );
+        } catch ( Exception e ) {
             e.printStackTrace();
         }
         this.repaint();
@@ -118,8 +117,8 @@ public class TempoX extends JFrame {
     public void selectTrack( int nowSelected ) {
         if ( selectedMusic != null )
             selectedMusic.close();
-        image[ 3 ] = new ImageIcon( getClass().getResource("../Resources/images/" + trackList.get( nowSelected ).getTitleImage() )).getImage();
-        image[ 4 ] = new ImageIcon( getClass().getResource("../Resources/images/" + trackList.get( nowSelected ).getStartImage() )).getImage();
+
+        image[ 3 ] = new ImageIcon( getClass().getResource("../Resources/images/" + trackList.get( nowSelected ).getStartImage() ) ).getImage();
         selectedMusic = new Music( trackList.get( nowSelected ).getStartMusic(), true );
         selectedMusic.start();
     }
@@ -277,14 +276,16 @@ public class TempoX extends JFrame {
     }
 
     public void createImage() {
-        int En = 2, Ba = 1;
-        for ( int i = 0; i < 10 ; i++ ) {
-            imageIconsEntered[ i ] = new ImageIcon( getClass().getResource("../Resources/images/" + En + ".png" ) );
-            imageIconsBasic[ i ] = new ImageIcon( getClass().getResource("../Resources/images/" + Ba + ".png" ) );
-            En += 2; Ba += 2;
-        }
-        for ( int i = 0; i < image.length-3 ; i++ ) {
-            image[ i ] = new ImageIcon( getClass().getResource("../Resources/images/" + ( i+21 ) + ".png" ) ).getImage();
+        try {
+            for (int i = 0; i < 10; i++) {
+                imageIconsEntered[i] = new ImageIcon(getClass().getResource("../Resources/images/ButtonEntered_" + ( i + 1 ) + ".png"));
+                imageIconsBasic[i] = new ImageIcon(getClass().getResource("../Resources/images/ButtonBasic_" + ( i + 1 ) + ".png"));
+            }
+            for (int i = 0; i < 2; i++) {
+                image[i] = new ImageIcon(getClass().getResource("../Resources/images/Image_" + ( i + 1 ) + ".png")).getImage();
+            }
+        } catch ( NullPointerException e ) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -297,6 +298,13 @@ public class TempoX extends JFrame {
     public void ButtonSetting() {
         for ( int i = 0; i < Button.length; i++ ) {
             buttonSetting( Button[ i ], XyWh[ i ][ 0 ], XyWh[ i ][ 1 ], XyWh[ i ][ 2 ], XyWh[ i ][ 3 ], imageIconsEntered[ i ], imageIconsBasic[ i ], menu[ i ], isSetVisible[ i ] );
+        }
+    }
+
+    public void TrackList() {
+        for ( int i = 1; i <= 3 ; i++ ) {
+            trackList.add( new Track( "Start Image_" + i + ".jpg", "Game Image_" + i + ".jpg",
+                    "Start Music_" + i + ".mp3", "Game Music_" + i + ".mp3", MusicTitle[ i-1 ] ) );
         }
     }
 }

@@ -8,7 +8,7 @@ public class UserManager {
 
     public boolean signup( String id, String password ) {
         if ( id.isEmpty() || password.isEmpty() ) {
-            return false;x
+            return false;
         }
 
         if (isIdExists(id)) {
